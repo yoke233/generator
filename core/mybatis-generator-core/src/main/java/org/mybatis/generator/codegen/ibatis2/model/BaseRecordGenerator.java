@@ -60,6 +60,8 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
+        commentGenerator.addClassComment(topLevelClass, introspectedTable);
+
         FullyQualifiedJavaType superClass = getSuperClass();
         if (superClass != null) {
             topLevelClass.setSuperClass(superClass);

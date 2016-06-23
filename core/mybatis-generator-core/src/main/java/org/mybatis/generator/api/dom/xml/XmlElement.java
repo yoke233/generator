@@ -131,6 +131,9 @@ public class XmlElement extends Element {
     public String getFormattedContent(int indentLevel) {
         StringBuilder sb = new StringBuilder();
 
+        if(indentLevel == 1)
+            OutputUtilities.newLine(sb);
+
         OutputUtilities.xmlIndent(sb, indentLevel);
         sb.append('<');
         sb.append(name);

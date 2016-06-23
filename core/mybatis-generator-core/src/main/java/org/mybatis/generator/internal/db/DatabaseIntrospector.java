@@ -27,6 +27,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -709,6 +710,7 @@ public class DatabaseIntrospector {
                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),
                     delimitIdentifiers, context);
 
+
             IntrospectedTable introspectedTable = ObjectFactory
                     .createIntrospectedTable(tc, table, context);
 
@@ -719,6 +721,19 @@ public class DatabaseIntrospector {
             calculatePrimaryKey(table, introspectedTable);
             
             enhanceIntrospectedTable(introspectedTable);
+
+            Statement statement = null;
+            try {
+                statement = databaseMetaData.getConnection().createStatement();
+                ResultSet rs = statement.executeQuery("SHOW TABLE STATUS LIKE '" + atn.getTableName() + "'");
+                while(rs.next()){
+                    introspectedTable.setRemarks(rs.getString("COMMENT"));
+                }
+                closeResultSet(rs);
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             answer.add(introspectedTable);
         }

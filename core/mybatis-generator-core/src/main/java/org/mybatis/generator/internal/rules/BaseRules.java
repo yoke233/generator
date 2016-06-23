@@ -116,15 +116,16 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithoutBLOBs() {
-        if (isModelOnly) {
-            return false;
-        }
-        
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
-                && introspectedTable.hasPrimaryKeyColumns()
-                && introspectedTable.hasBaseColumns();
-
-        return rc;
+        return false;
+//        if (isModelOnly) {
+//            return false;
+//        }
+//
+//        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
+//                && introspectedTable.hasPrimaryKeyColumns()
+//                && introspectedTable.hasBaseColumns();
+//
+//        return rc;
     }
 
     /**
